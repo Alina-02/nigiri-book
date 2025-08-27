@@ -1,3 +1,11 @@
+# Nigiri-Book
+
+A desktop epub reader application powered by Electron and Next.js
+
+## Libraries
+
+- React Reader: https://www.npmjs.com/package/react-reader
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
