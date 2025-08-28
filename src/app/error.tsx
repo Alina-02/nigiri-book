@@ -1,7 +1,19 @@
-import Title from "@/components/basic/Title";
+"use client";
+import React, { useEffect } from "react";
 import { Icons } from "@/components/Icons";
+import Title from "@/components/basic/Title";
 
-export default function Home() {
+interface Props {
+  error: Error & { digest?: string };
+}
+
+const Error = (props: Props) => {
+  const { error } = props;
+
+  useEffect(() => {
+    console.error(error);
+  }, [error]);
+
   return (
     <div
       id="main-container"
@@ -11,10 +23,11 @@ export default function Home() {
       <div className="text-center m-16 w-[640px] grid gap-2">
         <Title>Sorry, we had an error :(</Title>
         <p>
-          <b>Error message:</b> mensaje de error porque debe haber un mensaje
-          probablemente incomprensible respecto a lo que ha ocurrido.
+          <b>Error message:</b> {error.message}
         </p>
       </div>
     </div>
   );
-}
+};
+
+export default Error;
