@@ -1,7 +1,11 @@
-import React from "react";
+import React, { ReactNode } from "react";
 
-const Text = () => {
-  return <div></div>;
+type Props = {
+  children: string;
+};
+
+const Text = ({ children }: Props) => {
+  return <div className="font-inter">{children} </div>;
 };
 
 export default Text;

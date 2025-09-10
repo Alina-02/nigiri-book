@@ -2,6 +2,7 @@
 import React, { useEffect } from "react";
 import { Icons } from "@/components/Icons";
 import Title from "@/components/basic/Title";
+import Text from "@/components/basic/Text";
 
 interface Props {
   error: Error & { digest?: string };
@@ -22,9 +23,7 @@ const Error = (props: Props) => {
       <Icons.main />
       <div className="text-center m-16 w-[640px] grid gap-2">
         <Title>Sorry, we had an error :(</Title>
-        <p>
-          <b>Error message:</b> {error.message}
-        </p>
+        <Text>{`${(<b>Error message:</b>)} ${error.message}`}</Text>
       </div>
     </div>
   );

@@ -1,8 +1,36 @@
+@font-face {
+  font-family: Inter;
+  font-weight: 400;
+  src: url("../assets/fonts/inter/Inter_18pt-Regular.ttf");
+}
+@font-face {
+  font-family: Inria Sherif;
+  font-weight: 400;
+  src: url("../assets/fonts/inria/InriaSerif-Regular.ttf");
+}
+@font-face {
+  font-family: InterExtraLight;
+  font-weight: 200;
+  src: url("../assets/fonts/inter/Inter_18pt-Light.ttf");
+}
+@font-face {
+  font-family: InterBold;
+  font-weight: 700;
+  src: url("../assets/fonts/inter/Inter_18pt-Bold.ttf");
+}
+
 @import "tailwindcss";
 
 :root {
   --background: #ffffff;
   --foreground: #171717;
+}
+
+@theme {
+  --font-inter: Inter, "Roboto", "sans-sherif";
+  --font-inter-extralight: InterExtraLight, "Roboto";
+  --font-inter-bold: InterBold, "Roboto";
+  --font-inria-sherif: "Inria Sherif", "sans-sherif";
 }
 
 @layer base {

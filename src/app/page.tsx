@@ -1,4 +1,6 @@
 import Title from "@/components/basic/Title";
+import Text from "@/components/basic/Text";
+
 import { Icons } from "@/components/Icons";
 
 export default function Home() {
@@ -10,10 +12,10 @@ export default function Home() {
       <Icons.main />
       <div className="text-center m-16 w-[640px] grid gap-2">
         <Title>Sorry, we had an error :(</Title>
-        <p>
-          <b>Error message:</b> mensaje de error porque debe haber un mensaje
+        <Text>
+          Error message: mensaje de error porque debe haber un mensaje
           probablemente incomprensible respecto a lo que ha ocurrido.
-        </p>
+        </Text>
       </div>
     </div>
   );
