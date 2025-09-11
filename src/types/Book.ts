@@ -7,7 +7,7 @@ export interface Book {
   valoration?: number;
   review?: string;
   quotes: string[];
-  comments: string[];
+  comments: Comment[];
   cover?: string;
   state: BookState;
   saga?: string;
@@ -19,4 +19,9 @@ export enum BookState {
   Reading = "READING",
   Read = "READ",
   Pendant = "PENDANT",
+}
+
+export interface Comment {
+  page: number;
+  text: string;
 }

@@ -102,4 +102,21 @@ export const Icons = {
       />
     </svg>
   ),
+  heart: (props: SVGProps<SVGSVGElement>) => (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={30}
+      height={24}
+      fill="none"
+      {...props}
+    >
+      <path
+        stroke="#903D1C"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={1.5}
+        d="M26.736 3.358a7.192 7.192 0 0 0-10.173 0l-.86.859a.745.745 0 0 1-1.053 0l-.86-.86A7.193 7.193 0 1 0 3.618 13.532l8.399 8.399a4.47 4.47 0 0 0 6.322 0l8.398-8.4a7.192 7.192 0 0 0 0-10.172Z"
+      />
+    </svg>
+  ),
 };

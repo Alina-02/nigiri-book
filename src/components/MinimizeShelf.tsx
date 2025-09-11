@@ -1,7 +1,7 @@
 import React from "react";
-import Book from "./Book";
 import { books } from "@/sampleData/sampleBooks";
 import { BookState } from "@/types/Book";
+import BookCover from "./BookCover";
 
 interface Props {
   shelfTitle: string;
@@ -20,7 +20,7 @@ const MinimizeShelf = (props: Props) => {
   return (
     <div className="flex flex-col gap-3">
       <h3 className="font-inter font-bold text-xl">{shelfTitle}</h3>
-      <div className="flex flex-row gap-3">
+      <div className="flex flex-row gap-3 overflow-hidden">
         {books
           .filter((book) => {
             if (shelfType === ShelfType.Reading) {
@@ -34,9 +34,9 @@ const MinimizeShelf = (props: Props) => {
             }
           })
           .map((book, index) => (
-            <Book
+            <BookCover
               key={book.title.trim().toLowerCase() + index}
-              cover={book.cover}
+              book={book}
             />
           ))}
       </div>
