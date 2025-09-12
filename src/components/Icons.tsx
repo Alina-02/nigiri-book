@@ -119,4 +119,18 @@ export const Icons = {
       />
     </svg>
   ),
+  addBook: (props: SVGProps<SVGSVGElement>) => (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={54}
+      height={54}
+      fill="none"
+      {...props}
+    >
+      <path
+        fill="#fff"
+        d="M8.144 8.144a26.667 26.667 0 1 1 37.71 37.71A26.666 26.666 0 0 1 8.146 8.146l-.003-.003ZM29.667 19a2.667 2.667 0 0 0-5.334 0v5.333H19a2.667 2.667 0 0 0 0 5.334h5.333V35a2.667 2.667 0 0 0 5.334 0v-5.333H35a2.666 2.666 0 1 0 0-5.334h-5.333V19Z"
+      />
+    </svg>
+  ),
 };

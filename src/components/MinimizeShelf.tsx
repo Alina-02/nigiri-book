@@ -2,10 +2,13 @@ import React from "react";
 import { books } from "@/sampleData/sampleBooks";
 import { BookState } from "@/types/Book";
 import BookCover from "./BookCover";
+import AddBook from "./AddBook";
 
 interface Props {
   shelfTitle: string;
   shelfType: ShelfType;
+  last?: boolean;
+  first?: boolean;
 }
 
 export enum ShelfType {
@@ -16,11 +19,16 @@ export enum ShelfType {
 }
 
 const MinimizeShelf = (props: Props) => {
-  const { shelfTitle, shelfType } = props;
+  const { shelfTitle, shelfType, first, last } = props;
   return (
-    <div className="flex flex-col gap-3">
+    <div
+      className={`flex flex-col gap-3  ${last ? "mb-12" : "mb-0"} ${
+        first ? "mt-12" : "mt-0"
+      }`}
+    >
       <h3 className="font-inter font-bold text-xl">{shelfTitle}</h3>
       <div className="flex flex-row gap-3 overflow-hidden">
+        <AddBook />
         {books
           .filter((book) => {
             if (shelfType === ShelfType.Reading) {

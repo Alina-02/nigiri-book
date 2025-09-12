@@ -85,6 +85,7 @@
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-primary: #967f68;
+  --color-secondary: #bfab97;
   --color-pending: #ffcccc;
   --color-progress: #ffeacc;
   --color-read: #d1ffc3;
@@ -101,6 +102,12 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: Inter, Helvetica, sans-serif;
+  padding: 0;
+  margin: 0;
+}
+
+* {
+  -ms-overflow-style: none;
 }
 
 h1 {
