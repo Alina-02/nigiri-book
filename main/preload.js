@@ -1,10 +1,14 @@
-import { contextBridge, ContextBridge, ipcRenderer } from "electron";
+// eslint-disable-next-line @typescript-eslint/no-require-imports
+const { contextBridge, ipcRenderer } = require("electron");
 
-contextBridge.exposeInMainWorld("electronAPI", {
+contextBridge.exposeInMainWorld("api", {
   on: (channel, callback) => {
     ipcRenderer.on(channel, callback);
   },
   send: (channel, args) => {
     ipcRenderer.send(channel, args);
+  },
+  showOpenBook: () => {
+    ipcRenderer.send("show-open-dialog");
   },
 });

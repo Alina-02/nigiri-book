@@ -13,6 +13,7 @@ export interface Book {
   saga?: string;
   progressPage: number;
   favourite: boolean;
+  file?: string;
 }
 
 export enum BookState {

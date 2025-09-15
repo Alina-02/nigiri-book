@@ -8,10 +8,14 @@ import { Icons } from "./Icons";
 const BookCover = () => {
   const { selectedBookDetails, setSelectedBookDetails } = useMainStore();
 
+  const addNewBook = () => {
+    window.api.showOpenBook();
+  };
+
   return (
     <div
       className="flex h-[220px] w-[138px] min-w-[138px] border-2 bg-secondary rounded-2xl cursor-pointer justify-center items-center"
-      onClick={() => {}}
+      onClick={addNewBook}
     >
       {<Icons.addBook />}
     </div>
