@@ -3,8 +3,12 @@ import serve from "electron-serve";
 import path from "path";
 import AdmZip from "adm-zip";
 import { parseStringPromise } from "xml2js";
+import fs from "fs";
 
 const __dirname = path.resolve();
+
+const BOOKS_FOLDER = path.join(`${app.getPath("userData")}`, "books");
+const BOOKS_FILE = path.join(BOOKS_FOLDER, "books.json");
 
 const appServe = app.isPackaged
   ? serve({
@@ -57,10 +61,10 @@ const showOpenBook = async (browserWindow) => {
 
   const [filePath] = result.filePaths;
 
-  openFile(browserWindow, filePath);
+  saveNewBook(browserWindow, filePath);
 };
 
-const openFile = async (browserWindow, filePath) => {
+const saveNewBook = async (browserWindow, filePath) => {
   // read epub as zip
   const zip = new AdmZip(filePath);
 
@@ -80,14 +84,82 @@ const openFile = async (browserWindow, filePath) => {
 
   // information
   const title = meta["dc:title"]?.[0] ?? null;
-  const creator =
+  const author =
     (meta["dc:creator"]?.[0]?._ || meta["dc:creator"]?.[0]) ?? null;
-  const language = meta["dc:language"]?.[0] ?? null;
-  const publisher = meta["dc:publisher"]?.[0] ?? null;
-  const date = meta["dc:date"]?.[0] ?? null;
   const description = meta["dc:description"]?.[0] ?? null;
 
-  console.log(title, creator, language, publisher, date, description);
+  const cover = getBookCoverFromEpub(opfJson, meta, opfPath);
+
+  const book = {
+    title,
+    author,
+    description,
+    saga: "",
+    cover: cover ? cover : "",
+    file: filePath,
+
+    initDate: [],
+    endDate: [],
+    valoration: undefined,
+    review: undefined,
+    quotes: [],
+    comments: [],
+    state: "PENDANT",
+    progressPage: 0,
+    favourite: false,
+  };
+
+  console.log(book);
+
+  try {
+    if (!fs.existsSync(BOOKS_FOLDER)) {
+      fs.mkdirSync(BOOKS_FOLDER, { recursive: true });
+    }
+
+    const safeTitle = String(book.title || "untitled");
+    const epubFileName = `${safeTitle.replace(/[^a-z0-9]/gi, "_")}.epub`;
+    const destEpubPath = path.join(BOOKS_FOLDER, epubFileName);
+
+    fs.copyFileSync(filePath, destEpubPath);
+
+    let books = [];
+    if (fs.existsSync(BOOKS_FILE)) {
+      const data = fs.readFileSync(BOOKS_FILE, "utf-8");
+      books = JSON.parse(data);
+    }
+
+    books.push(book);
+
+    fs.writeFileSync(BOOKS_FILE, JSON.stringify(books, null, 2), "utf-8");
+    return { success: true, newBooks: books };
+  } catch (err) {
+    console.error(err);
+    return { success: false, error: err };
+  }
+};
+
+const getBookCoverFromEpub = ({ opfJson, meta, opfPath }) => {
+  // cover
+  let coverBase64;
+  try {
+    const manifest = opfJson?.package?.manifest?.[0]?.item || [];
+    const coverMeta = meta.meta?.find((m) => m.$?.name === "cover");
+    const coverId = coverMeta?.$?.content;
+    const coverItem = manifest.find((i) => i.$?.id === coverId);
+    if (coverItem) {
+      const coverPath = coverItem.$.href;
+      const opfDir = opfPath.substring(0, opfPath.lastIndexOf("/") + 1);
+      const fullCoverPath = opfDir + coverPath;
+      const coverBuffer = zip.readFile(fullCoverPath);
+      if (coverBuffer) {
+        return (coverBase64 = `data:image/${coverPath
+          .split(".")
+          .pop()};base64,${coverBuffer.toString("base64")}`);
+      }
+    }
+  } catch (e) {
+    console.warn("Error extracting the cover:", e);
+  }
 };
 
 app.on("window-all-closed", () => {

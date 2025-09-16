@@ -30,7 +30,7 @@ export default function RootLayout({
       >
         <div className="flex flex-col h-screen">
           <TopBar />
-          <div className="overflow-y-hidden"> {children}</div>
+          <div className="overflow-y-hidden">{children}</div>
         </div>
       </body>
     </html>

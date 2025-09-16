@@ -5,6 +5,7 @@ import { Book, BookState } from "@/types/Book";
 import React from "react";
 import Button, { ButtonType } from "./basic/Button";
 import { Icons } from "./Icons";
+import Link from "next/link";
 
 const BookDetailsCard = () => {
   const { selectedBookDetails } = useMainStore();
@@ -46,7 +47,7 @@ const BookDetailsCard = () => {
                 Pendant
               </div>
             ) : selectedBookDetails?.state === BookState.Read ? (
-              <div id="state" className="rounded-full bg-read max-w-max px-4">
+              <div id="state" className="rounded-full bg-read max-w-max px-4 ">
                 Read
               </div>
             ) : (
@@ -69,7 +70,12 @@ const BookDetailsCard = () => {
             </p>
             <p id="summary">{selectedBookDetails?.description}</p>
           </div>
-          <Button text="Read" type={ButtonType.primary} />
+          <Link
+            href="/read"
+            className="p-2 rounded-lg w-full bg-primary flex justify-center items-center text-white"
+          >
+            Read
+          </Link>
         </div>
       </div>
       <div id="reviews">

@@ -133,4 +133,62 @@ export const Icons = {
       />
     </svg>
   ),
+  singlePage: (props: SVGProps<SVGSVGElement>) => (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={33}
+      height={30}
+      fill="none"
+      {...props}
+    >
+      <path
+        stroke="#fff"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={3}
+        d="M8.708 8.5h16.25M8.708 15h16.25m-16.25 6.5h16.25M2.208 5.25A3.25 3.25 0 0 1 5.458 2h22.75a3.25 3.25 0 0 1 3.25 3.25v19.5a3.25 3.25 0 0 1-3.25 3.25H5.458a3.25 3.25 0 0 1-3.25-3.25V5.25Z"
+      />
+    </svg>
+  ),
+  menu: (props: SVGProps<SVGSVGElement>) => (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={29}
+      height={24}
+      fill="none"
+      {...props}
+    >
+      <path
+        stroke="#fff"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={3}
+        d="M1.5 2.25h26M1.5 12h26m-26 9.75h26"
+      />
+    </svg>
+  ),
+  back: (props: SVGProps<SVGSVGElement>) => (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={28}
+      height={24}
+      fill="none"
+      {...props}
+    >
+      <path
+        stroke="#fff"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={3}
+        d="m8.625 15.25-6.5-6.5 6.5-6.5"
+      />
+      <path
+        stroke="#fff"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={3}
+        d="M2.125 8.75H20a6.5 6.5 0 0 1 0 13h-1.625"
+      />
+    </svg>
+  ),
 };
