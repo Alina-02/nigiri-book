@@ -4,7 +4,7 @@ import { Icons } from "./Icons";
 const ReadFloatingMenu = () => {
   return (
     <div
-      className="px-4 gap-6 items-center bg-primary rounded-xl flex flex-row p-2 justify-around"
+      className="px-4 gap-7 items-center bg-primary rounded-xl flex flex-row p-2 justify-around"
       style={{
         width: "fit-content",
         position: "absolute",

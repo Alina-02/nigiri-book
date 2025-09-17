@@ -51,6 +51,10 @@ ipcMain.on("show-open-dialog", (event) => {
   showOpenBook(browserWindow);
 });
 
+ipcMain.handle("get-books-data", (event) => {
+  return getBooksData();
+});
+
 const showOpenBook = async (browserWindow) => {
   const result = await dialog.showOpenDialog(browserWindow, {
     properties: ["openFile"],
@@ -91,9 +95,9 @@ const saveNewBook = async (browserWindow, filePath) => {
   const cover = getBookCoverFromEpub(opfJson, meta, opfPath);
 
   const book = {
-    title,
-    author,
-    description,
+    title: normalizeField(title),
+    author: normalizeField(author),
+    description: normalizeField(description),
     saga: "",
     cover: cover ? cover : "",
     file: filePath,
@@ -108,8 +112,6 @@ const saveNewBook = async (browserWindow, filePath) => {
     progressPage: 0,
     favourite: false,
   };
-
-  console.log(book);
 
   try {
     if (!fs.existsSync(BOOKS_FOLDER)) {
@@ -138,6 +140,15 @@ const saveNewBook = async (browserWindow, filePath) => {
   }
 };
 
+const normalizeField = (field) => {
+  if (!field) return "";
+  if (typeof field === "string") return field;
+  if (typeof field === "object") {
+    if ("_" in field) return field._;
+  }
+  return String(field);
+};
+
 const getBookCoverFromEpub = ({ opfJson, meta, opfPath }) => {
   // cover
   let coverBase64;
@@ -159,6 +170,25 @@ const getBookCoverFromEpub = ({ opfJson, meta, opfPath }) => {
     }
   } catch (e) {
     console.warn("Error extracting the cover:", e);
+  }
+};
+
+const getBooksData = () => {
+  try {
+    if (!fs.existsSync(BOOKS_FILE)) {
+      return [];
+    }
+
+    const raw = fs.readFileSync(BOOKS_FILE, "utf-8");
+    if (!raw.trim()) {
+      return [];
+    }
+
+    const data = JSON.parse(raw);
+    return Array.isArray(data) ? data : [];
+  } catch (err) {
+    console.error("Error getting books information:", err);
+    return [];
   }
 };
 

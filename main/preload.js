@@ -11,4 +11,7 @@ contextBridge.exposeInMainWorld("api", {
   showOpenBook: () => {
     ipcRenderer.send("show-open-dialog");
   },
+  getBooksData: () => {
+    return ipcRenderer.invoke("get-books-data");
+  },
 });

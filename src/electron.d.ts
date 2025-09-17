@@ -4,5 +4,6 @@ declare const MAIN_WINDOW_VITE_NAME: string;
 declare interface Window {
   api: {
     showOpenBook: () => void;
+    getBooksData: () => Promise<Books[]>;
   };
 }

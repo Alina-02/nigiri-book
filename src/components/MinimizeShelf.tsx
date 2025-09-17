@@ -1,8 +1,8 @@
 import React from "react";
-import { books } from "@/sampleData/sampleBooks";
 import { BookState } from "@/types/Book";
 import BookCover from "./BookCover";
 import AddBook from "./AddBook";
+import { useMainStore } from "@/store/mainStore";
 
 interface Props {
   shelfTitle: string;
@@ -20,6 +20,8 @@ export enum ShelfType {
 
 const MinimizeShelf = (props: Props) => {
   const { shelfTitle, shelfType, first, last } = props;
+  const { books } = useMainStore();
+
   return (
     <div
       className={`flex flex-col gap-3  ${last ? "mb-12" : "mb-0"} ${
@@ -30,7 +32,7 @@ const MinimizeShelf = (props: Props) => {
       <div className="flex flex-row gap-3 overflow-hidden">
         <AddBook />
         {books
-          .filter((book) => {
+          ?.filter((book) => {
             if (shelfType === ShelfType.Reading) {
               return book.state === BookState.Reading;
             } else if (shelfType === ShelfType.Favourite) {

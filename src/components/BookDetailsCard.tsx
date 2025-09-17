@@ -3,7 +3,6 @@
 import { useMainStore } from "@/store/mainStore";
 import { Book, BookState } from "@/types/Book";
 import React from "react";
-import Button, { ButtonType } from "./basic/Button";
 import { Icons } from "./Icons";
 import Link from "next/link";
 
@@ -87,7 +86,7 @@ const BookDetailsCard = () => {
       <div id="quotes">
         <h3 className="font-inter-bold text-lg">Quotes</h3>
         <ul>
-          {selectedBookDetails?.quotes
+          {selectedBookDetails?.quotes.length
             ? selectedBookDetails?.quotes.map((quote, index) => (
                 <ol key={index}>{quote}</ol>
               ))
@@ -97,7 +96,7 @@ const BookDetailsCard = () => {
       <div id="comments">
         <h3 className="font-inter-bold text-lg">Comments</h3>
         <ul>
-          {selectedBookDetails?.comments
+          {selectedBookDetails?.comments.length
             ? selectedBookDetails?.comments.map((comment, index) => (
                 <ol key={index}>
                   Page {comment.page} - {comment.text}

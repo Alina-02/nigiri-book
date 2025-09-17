@@ -1,7 +1,45 @@
+"use client";
+
+import { useEffect, useRef } from "react";
+import ePub from "epubjs";
+
 import ReadFloatingMenu from "@/components/ReadFloatingMenu";
+import { useMainStore } from "@/store/mainStore";
 import React from "react";
 
 const Read = () => {
+  const { selectedBookDetails } = useMainStore();
+
+  console.log(selectedBookDetails);
+
+  const viewerRef = useRef<HTMLDivElement>(null);
+  const renditionRef = useRef<any>(null);
+
+  useEffect(() => {
+    if (!viewerRef.current || !selectedBookDetails?.file) return;
+
+    const book = ePub(selectedBookDetails?.file);
+    const rendition = book.renderTo(viewerRef.current, {
+      width: "100%",
+      height: "100%",
+    });
+
+    rendition.display();
+    renditionRef.current = rendition;
+
+    return () => {
+      book.destroy();
+    };
+  }, [selectedBookDetails]);
+
+  const nextPage = () => {
+    renditionRef.current?.next();
+  };
+
+  const prevPage = () => {
+    renditionRef.current?.prev();
+  };
+
   const getPercentage = (totalPages: number, actualPage: number) => {
     return (actualPage / totalPages) * 100;
   };
@@ -15,7 +53,10 @@ const Read = () => {
             <p>Page 145</p>
             <p>{getPercentage(1000, 154)}%</p>
           </div>
-          <div className="p-8 bg-amber-100 h-full rounded-2xl font-inria-sherif">
+          <div
+            ref={viewerRef}
+            className="p-8 bg-amber-100 max-h-[1384px] min-h-5/6 rounded-2xl font-inria-sherif"
+          >
             In medias res is a Latin phrase that means “in the middle of
             things;” in literature, it usually refers to starting a book,
             chapter, or scene in the middle of the narrative, without any

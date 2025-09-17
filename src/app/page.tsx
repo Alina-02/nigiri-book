@@ -3,9 +3,16 @@
 import BookDetailsCard from "@/components/BookDetailsCard";
 import MinimizeShelf, { ShelfType } from "@/components/MinimizeShelf";
 import { useMainStore } from "@/store/mainStore";
+import { useEffect } from "react";
 
 export default function Home() {
-  const { selectedBookDetails } = useMainStore();
+  const { selectedBookDetails, setBooks } = useMainStore();
+
+  useEffect(() => {
+    window.api.getBooksData().then((books) => {
+      setBooks(books);
+    });
+  }, []);
 
   return (
     <div className="flex flex-row mx-16 gap-4">
