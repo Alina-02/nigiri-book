@@ -36,7 +36,7 @@ const MinimizeShelf = (props: Props) => {
             if (shelfType === ShelfType.Reading) {
               return book.state === BookState.Reading;
             } else if (shelfType === ShelfType.Favourite) {
-              return !book.favourite;
+              return book.favourite;
             } else if (shelfType === ShelfType.Finished) {
               return book.state === BookState.Read;
             } else if (shelfType === ShelfType.Pending) {

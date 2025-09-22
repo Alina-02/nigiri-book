@@ -14,4 +14,7 @@ contextBridge.exposeInMainWorld("api", {
   getBooksData: () => {
     return ipcRenderer.invoke("get-books-data");
   },
+  getBookFile: (filePath) => {
+    return ipcRenderer.invoke("get-book-file", filePath);
+  },
 });

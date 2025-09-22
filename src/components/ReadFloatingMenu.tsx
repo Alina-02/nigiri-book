@@ -1,5 +1,6 @@
 import React from "react";
 import { Icons } from "./Icons";
+import Link from "next/link";
 
 const ReadFloatingMenu = () => {
   return (
@@ -13,9 +14,12 @@ const ReadFloatingMenu = () => {
         transform: "translateX(-50%)",
       }}
     >
-      <button className="cursor-pointer">
+      <Link
+        href="/"
+        className="rounded-lg w-full bg-primary flex justify-center items-center text-white"
+      >
         <Icons.back />
-      </button>
+      </Link>
       <button className="cursor-pointer">
         <Icons.singlePage />
       </button>

@@ -55,6 +55,10 @@ ipcMain.handle("get-books-data", (event) => {
   return getBooksData();
 });
 
+ipcMain.handle("get-book-file", (event, filePath) => {
+  return getBookFile(filePath);
+});
+
 const showOpenBook = async (browserWindow) => {
   const result = await dialog.showOpenDialog(browserWindow, {
     properties: ["openFile"],
@@ -190,6 +194,15 @@ const getBooksData = () => {
     console.error("Error getting books information:", err);
     return [];
   }
+};
+
+const getBookFile = async (filePath) => {
+  if (!fs.existsSync(BOOKS_FOLDER)) {
+    return;
+  }
+
+  const data = fs.readFileSync(filePath);
+  return data.toString("base64");
 };
 
 app.on("window-all-closed", () => {
