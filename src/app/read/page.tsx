@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import ePub, { Book, Rendition } from "epubjs";
 
 import ReadFloatingMenu from "@/components/ReadFloatingMenu";
@@ -11,8 +11,11 @@ const Read = () => {
   const { selectedBookDetails } = useMainStore();
 
   const viewerRef = useRef<HTMLDivElement>(null);
-  const renditionRef = useRef<Rendition | null>(null);
   const bookRef = useRef<Book | null>(null);
+  const renditionRef = useRef<Rendition | null>(null);
+
+  const [page, setPage] = useState(0);
+  const [percentage, setPercentage] = useState(0);
 
   useEffect(() => {
     if (!viewerRef.current || !selectedBookDetails?.file) return;
@@ -20,7 +23,9 @@ const Read = () => {
     let cancelled = false;
 
     const loadBook = async () => {
+      if (!selectedBookDetails.file) return;
       const bookBase64 = await window.api.getBookFile(selectedBookDetails.file);
+
       if (!bookBase64 || cancelled) return;
 
       const byteArray = Uint8Array.from(atob(bookBase64), (c) =>
@@ -40,15 +45,35 @@ const Read = () => {
       if (viewerRef.current) viewerRef.current.innerHTML = "";
 
       const book = ePub(arrayBuffer);
-      const rendition = book.renderTo(viewerRef.current, {
-        width: "100%",
-        height: "100%",
-      });
 
-      bookRef.current = book;
-      renditionRef.current = rendition;
+      if (viewerRef.current) {
+        const rendition = book.renderTo(viewerRef.current, {
+          width: "100%",
+          height: "100%",
+        });
 
-      rendition.display(book.navigation?.toc?.[0]?.href || undefined);
+        bookRef.current = book;
+        renditionRef.current = rendition;
+
+        await book.ready;
+        await book.locations.generate(1000);
+
+        rendition.display(book.navigation?.toc?.[0]?.href || undefined);
+
+        rendition.on("relocated", (location: any) => {
+          if (!location?.start?.cfi) return;
+
+          const currentPage = book.locations.locationFromCfi(
+            location.start.cfi
+          );
+          const percentage = book.locations.percentageFromCfi(
+            location.start.cfi
+          );
+
+          setPage(currentPage);
+          setPercentage(Math.round(percentage * 100));
+        });
+      }
     };
 
     loadBook();
@@ -70,6 +95,7 @@ const Read = () => {
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (!renditionRef.current) return;
+      console.log();
       if (e.key === "ArrowRight") renditionRef.current.next();
       if (e.key === "ArrowLeft") renditionRef.current.prev();
     };
@@ -83,13 +109,13 @@ const Read = () => {
       <ReadFloatingMenu />
       <div className="flex flex-row mx-16 my-16 gap-4 h-full">
         <div className="w-full h-full flex flex-col gap-2">
-          <div className="flex flex-row justify-between px-4">
-            <p>Page 145</p>
-            <p>...</p>
+          <div className="flex flex-row justify-between px-4 font-bold">
+            <p>Page {page}</p>
+            <p>{percentage}%</p>
           </div>
           <div
             ref={viewerRef}
-            className="p-8 bg-amber-100 max-h-[1384px] min-h-5/6 rounded-2xl font-inria-sherif"
+            className="shadow-md p-4 bg-amber-100 max-h-[1384px] min-h-5/6 rounded-2xl font-inria-sherif"
           />
         </div>
       </div>

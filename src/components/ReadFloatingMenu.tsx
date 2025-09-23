@@ -5,7 +5,7 @@ import Link from "next/link";
 const ReadFloatingMenu = () => {
   return (
     <div
-      className="px-4 gap-7 items-center bg-primary rounded-xl flex flex-row p-2 justify-around"
+      className="px-4 gap-7 items-center bg-primary rounded-xl flex flex-row p-2 justify-around shadow-md"
       style={{
         width: "fit-content",
         position: "absolute",
@@ -20,11 +20,11 @@ const ReadFloatingMenu = () => {
       >
         <Icons.back />
       </Link>
-      <button className="cursor-pointer">
+      {/*<button className="cursor-pointer">
         <Icons.singlePage />
-      </button>
+      </button>*/}
       <button className="cursor-pointer">
-        <Icons.settings />
+        <Icons.settingsWhite />
       </button>
       <button className="cursor-pointer">
         <Icons.menu />

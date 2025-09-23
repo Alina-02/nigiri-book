@@ -16,7 +16,7 @@ const TopBar = () => {
         <p className="font-inter-extralight  text-2xl">Book</p>
       </div>
       <button className="w-[36px] h-[36px] cursor-pointer">
-        <Icons.settings />
+        <Icons.settingsBlack />
       </button>
     </div>
   );

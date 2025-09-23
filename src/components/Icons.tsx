@@ -78,7 +78,7 @@ export const Icons = {
       />
     </svg>
   ),
-  settings: (props: SVGProps<SVGSVGElement>) => (
+  settingsBlack: (props: SVGProps<SVGSVGElement>) => (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       width={31}
@@ -95,6 +95,30 @@ export const Icons = {
       />
       <path
         stroke="#000"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={2.5}
+        d="M11 15a4.5 4.5 0 1 0 9 0 4.5 4.5 0 0 0-9 0Z"
+      />
+    </svg>
+  ),
+  settingsWhite: (props: SVGProps<SVGSVGElement>) => (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={31}
+      height={30}
+      fill="none"
+      {...props}
+    >
+      <path
+        stroke="#FFF"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={2.5}
+        d="M12.988 3.475c.639-2.634 4.386-2.634 5.024 0a2.586 2.586 0 0 0 3.86 1.6c2.314-1.41 4.965 1.239 3.555 3.554a2.585 2.585 0 0 0 1.598 3.859c2.634.639 2.634 4.386 0 5.024a2.585 2.585 0 0 0-1.6 3.86c1.41 2.314-1.239 4.965-3.555 3.555a2.585 2.585 0 0 0-3.858 1.598c-.639 2.634-4.386 2.634-5.024 0a2.585 2.585 0 0 0-3.86-1.6c-2.314 1.41-4.965-1.239-3.555-3.555a2.586 2.586 0 0 0-1.598-3.858c-2.634-.639-2.634-4.386 0-5.024a2.586 2.586 0 0 0 1.6-3.86c-1.41-2.314 1.239-4.965 3.554-3.555 1.5.912 3.444.105 3.859-1.598Z"
+      />
+      <path
+        stroke="#FFF"
         strokeLinecap="round"
         strokeLinejoin="round"
         strokeWidth={2.5}
