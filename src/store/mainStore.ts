@@ -13,6 +13,24 @@ export const useMainStore = create<MainStore>()((set) => ({
   books: [],
   selectedBookDetails: null,
   setBooks: (allBooks: Book[]) => set((state) => ({ books: allBooks })),
-  setSelectedBookDetails: (book: Book | null) =>
-    set((state) => ({ selectedBookDetails: book })),
+  setSelectedBookDetails: (book: Book | null) => {
+    set((state) => {
+      if (book) {
+        const bookIndex = state.books.findIndex((b) => b.file === book.file);
+
+        if (bookIndex !== -1) {
+          const updatedBooks = [...state.books];
+          updatedBooks[bookIndex] = book;
+          return {
+            selectedBookDetails: book,
+            books: updatedBooks,
+          };
+        }
+      }
+
+      return {
+        selectedBookDetails: book,
+      };
+    });
+  },
 }));

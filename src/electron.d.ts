@@ -6,5 +6,6 @@ declare interface Window {
     showOpenBook: () => void;
     getBooksData: () => Promise<Books[]>;
     getBookFile: (filePath: string) => Promise<string | undefined>;
+    updateBookData: (filePath: string, newBookData: book) => Promise<void>;
   };
 }

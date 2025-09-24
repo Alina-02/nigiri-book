@@ -6,9 +6,11 @@ import ePub, { Book, Rendition } from "epubjs";
 import ReadFloatingMenu from "@/components/ReadFloatingMenu";
 import { useMainStore } from "@/store/mainStore";
 import React from "react";
+import ReadMenu from "@/components/ReadMenu";
+import { BookState } from "@/types/Book";
 
 const Read = () => {
-  const { selectedBookDetails } = useMainStore();
+  const { selectedBookDetails, setSelectedBookDetails } = useMainStore();
 
   const viewerRef = useRef<HTMLDivElement>(null);
   const bookRef = useRef<Book | null>(null);
@@ -71,6 +73,20 @@ const Read = () => {
           );
 
           setPage(currentPage);
+          setSelectedBookDetails({
+            ...selectedBookDetails,
+            progressPage: currentPage,
+          });
+          if (currentPage !== 0) {
+            const newBookData = {
+              ...selectedBookDetails,
+              progressPage: currentPage as number,
+              state: BookState.Reading,
+            };
+            setSelectedBookDetails(newBookData);
+            if (!selectedBookDetails.file) return;
+            window.api.updateBookData(selectedBookDetails.file, newBookData);
+          }
           setPercentage(Math.round(percentage * 100));
         });
       }
@@ -95,20 +111,20 @@ const Read = () => {
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (!renditionRef.current) return;
-      console.log();
+
       if (e.key === "ArrowRight") renditionRef.current.next();
       if (e.key === "ArrowLeft") renditionRef.current.prev();
     };
 
-    document.addEventListener("keydown", handleKeyDown);
+    window.addEventListener("keydown", handleKeyDown);
     return () => document.removeEventListener("keydown", handleKeyDown);
   }, []);
 
   return (
     <>
       <ReadFloatingMenu />
-      <div className="flex flex-row mx-16 my-16 gap-4 h-full">
-        <div className="w-full h-full flex flex-col gap-2">
+      <div className="flex flex-row ml-10 mr-8 my-16 gap-8 h-full overflow-hidden">
+        <div className="h-full w-full flex flex-col gap-2">
           <div className="flex flex-row justify-between px-4 font-bold">
             <p>Page {page}</p>
             <p>{percentage}%</p>
@@ -118,6 +134,7 @@ const Read = () => {
             className="shadow-md p-4 bg-amber-100 max-h-[1384px] min-h-5/6 rounded-2xl font-inria-sherif"
           />
         </div>
+        <ReadMenu />
       </div>
     </>
   );

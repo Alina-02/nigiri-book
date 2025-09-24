@@ -3,7 +3,8 @@ import serve from "electron-serve";
 import path from "path";
 import AdmZip from "adm-zip";
 import { parseStringPromise } from "xml2js";
-import fs from "fs";
+import * as fs from "fs";
+import * as fsPromises from "fs/promises";
 
 const __dirname = path.resolve();
 
@@ -55,8 +56,12 @@ ipcMain.handle("get-books-data", (event) => {
   return getBooksData();
 });
 
-ipcMain.handle("get-book-file", (event, filePath) => {
+ipcMain.handle("get-book-file", (_, filePath) => {
   return getBookFile(filePath);
+});
+
+ipcMain.on("update-book-data", (_, filePath, newBookData) => {
+  updateBookData(filePath, newBookData);
 });
 
 const showOpenBook = async (browserWindow) => {
@@ -203,6 +208,41 @@ const getBookFile = async (filePath) => {
 
   const data = fs.readFileSync(filePath);
   return data.toString("base64");
+};
+
+const updateBookData = async (filePath, newBookData) => {
+  if (!filePath || !newBookData) {
+    console.error("Error: filePath and newBookData must be provided.");
+  }
+
+  try {
+    const raw = await fsPromises.readFile(BOOKS_FILE, "utf-8");
+    const data = raw.trim() ? JSON.parse(raw) : [];
+
+    if (!Array.isArray(data)) {
+      console.error("Error: Book data file is not a valid JSON array.");
+    }
+
+    const index = data.findIndex((book) => book.file === filePath);
+
+    if (index === -1) {
+      console.warn(`Book with filePath "${filePath}" not found.`);
+    }
+    data[index] = newBookData;
+
+    fs.writeFileSync(BOOKS_FILE, JSON.stringify(data, null, 2), "utf-8");
+  } catch (error) {
+    if (error.code === "ENOENT") {
+      console.error(`Error: The file at ${BOOKS_FILE} was not found.`);
+    } else if (error instanceof SyntaxError) {
+      console.error("Error: Failed to parse JSON. File may be corrupt.");
+    } else {
+      console.error(
+        "An unexpected error occurred while updating book data:",
+        error
+      );
+    }
+  }
 };
 
 app.on("window-all-closed", () => {

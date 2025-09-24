@@ -7,7 +7,23 @@ import { Icons } from "./Icons";
 import Link from "next/link";
 
 const BookDetailsCard = () => {
-  const { selectedBookDetails } = useMainStore();
+  const { selectedBookDetails, setSelectedBookDetails } = useMainStore();
+
+  const updateBookHearts = (score: number) => {
+    if (!selectedBookDetails || !selectedBookDetails?.file) return;
+
+    const newBookData: Book = {
+      ...selectedBookDetails,
+      valoration: score,
+    };
+
+    setSelectedBookDetails(newBookData);
+    window.api.updateBookData(selectedBookDetails?.file, newBookData);
+  };
+
+  const updateBookReview = () => {};
+
+  const updateBookStatus = () => {};
 
   return (
     <div
@@ -21,11 +37,75 @@ const BookDetailsCard = () => {
             className="w-[269px] h-[429px] bg-emerald-500 rounded-xl"
           ></div>
           <div id="hearts" className="flex flex-row gap-1 justify-between px-8">
-            <Icons.heart />
-            <Icons.heart />
-            <Icons.heart />
-            <Icons.heart />
-            <Icons.heart />
+            {selectedBookDetails?.valoration &&
+            selectedBookDetails?.valoration >= 1 ? (
+              <Icons.filledHeart
+                onClick={() => {
+                  updateBookHearts(1);
+                }}
+              />
+            ) : (
+              <Icons.heart
+                onClick={() => {
+                  updateBookHearts(1);
+                }}
+              />
+            )}
+            {selectedBookDetails?.valoration &&
+            selectedBookDetails?.valoration >= 2 ? (
+              <Icons.filledHeart
+                onClick={() => {
+                  updateBookHearts(2);
+                }}
+              />
+            ) : (
+              <Icons.heart
+                onClick={() => {
+                  updateBookHearts(2);
+                }}
+              />
+            )}
+            {selectedBookDetails?.valoration &&
+            selectedBookDetails?.valoration >= 3 ? (
+              <Icons.filledHeart
+                onClick={() => {
+                  updateBookHearts(3);
+                }}
+              />
+            ) : (
+              <Icons.heart
+                onClick={() => {
+                  updateBookHearts(3);
+                }}
+              />
+            )}
+            {selectedBookDetails?.valoration &&
+            selectedBookDetails?.valoration >= 4 ? (
+              <Icons.filledHeart
+                onClick={() => {
+                  updateBookHearts(4);
+                }}
+              />
+            ) : (
+              <Icons.heart
+                onClick={() => {
+                  updateBookHearts(4);
+                }}
+              />
+            )}
+            {selectedBookDetails?.valoration === 5 ? (
+              <Icons.filledHeart
+                onClick={() => {
+                  updateBookHearts(5);
+                }}
+              />
+            ) : (
+              <Icons.heart
+                onClick={() => {
+                  updateBookHearts(5);
+                }}
+              />
+            )}
           </div>
         </div>
         <div id="basic-info" className="flex flex-col justify-between w-full ">
