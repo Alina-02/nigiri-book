@@ -23,7 +23,17 @@ const BookDetailsCard = () => {
 
   const updateBookReview = () => {};
 
-  const updateBookStatus = () => {};
+  const updateBookStatus = (newState: BookState) => {
+    if (!selectedBookDetails || !selectedBookDetails?.file) return;
+
+    const newBookData: Book = {
+      ...selectedBookDetails,
+      state: newState,
+    };
+
+    setSelectedBookDetails(newBookData);
+    window.api.updateBookData(selectedBookDetails?.file, newBookData);
+  };
 
   return (
     <div
@@ -43,12 +53,14 @@ const BookDetailsCard = () => {
                 onClick={() => {
                   updateBookHearts(1);
                 }}
+                className="cursor-pointer"
               />
             ) : (
               <Icons.heart
                 onClick={() => {
                   updateBookHearts(1);
                 }}
+                className="cursor-pointer"
               />
             )}
             {selectedBookDetails?.valoration &&
@@ -57,12 +69,14 @@ const BookDetailsCard = () => {
                 onClick={() => {
                   updateBookHearts(2);
                 }}
+                className="cursor-pointer"
               />
             ) : (
               <Icons.heart
                 onClick={() => {
                   updateBookHearts(2);
                 }}
+                className="cursor-pointer"
               />
             )}
             {selectedBookDetails?.valoration &&
@@ -71,12 +85,14 @@ const BookDetailsCard = () => {
                 onClick={() => {
                   updateBookHearts(3);
                 }}
+                className="cursor-pointer"
               />
             ) : (
               <Icons.heart
                 onClick={() => {
                   updateBookHearts(3);
                 }}
+                className="cursor-pointer"
               />
             )}
             {selectedBookDetails?.valoration &&
@@ -85,12 +101,14 @@ const BookDetailsCard = () => {
                 onClick={() => {
                   updateBookHearts(4);
                 }}
+                className="cursor-pointer"
               />
             ) : (
               <Icons.heart
                 onClick={() => {
                   updateBookHearts(4);
                 }}
+                className="cursor-pointer"
               />
             )}
             {selectedBookDetails?.valoration === 5 ? (
@@ -98,12 +116,14 @@ const BookDetailsCard = () => {
                 onClick={() => {
                   updateBookHearts(5);
                 }}
+                className="cursor-pointer"
               />
             ) : (
               <Icons.heart
                 onClick={() => {
                   updateBookHearts(5);
                 }}
+                className="cursor-pointer"
               />
             )}
           </div>
@@ -121,18 +141,30 @@ const BookDetailsCard = () => {
             {selectedBookDetails?.state === BookState.Pendant ? (
               <div
                 id="state"
-                className="rounded-full bg-pending max-w-max px-4"
+                className="rounded-full bg-pending max-w-max px-4 cursor-pointer"
+                onClick={() => {
+                  updateBookStatus(BookState.Reading);
+                }}
               >
                 Pendant
               </div>
             ) : selectedBookDetails?.state === BookState.Read ? (
-              <div id="state" className="rounded-full bg-read max-w-max px-4 ">
+              <div
+                id="state"
+                className="rounded-full bg-read max-w-max px-4 cursor-pointer"
+                onClick={() => {
+                  updateBookStatus(BookState.Pendant);
+                }}
+              >
                 Read
               </div>
             ) : (
               <div
                 id="state"
-                className="rounded-full bg-progress max-w-max px-4"
+                className="rounded-full bg-progress max-w-max px-4 cursor-pointer"
+                onClick={() => {
+                  updateBookStatus(BookState.Read);
+                }}
               >
                 In progress
               </div>
