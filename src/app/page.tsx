@@ -15,7 +15,7 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="flex flex-row mx-16 gap-4">
+    <div className="flex flex-row pl-16 mr-4 gap-4">
       <div
         className="flex flex-col gap-8 overflow-y-auto h-[calc(100vh-68px)]"
         style={{ width: selectedBookDetails ? "60%" : "100%" }}
@@ -29,7 +29,9 @@ export default function Home() {
         <MinimizeShelf shelfTitle="Favourite" shelfType={ShelfType.Favourite} />
         <MinimizeShelf shelfTitle="Read" shelfType={ShelfType.Finished} last />
       </div>
-      <div className="my-12">{selectedBookDetails && <BookDetailsCard />}</div>
+      <div className="h-[calc(100vh-68px)]">
+        {selectedBookDetails && <BookDetailsCard />}
+      </div>
     </div>
   );
 }

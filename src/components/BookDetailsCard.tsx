@@ -2,12 +2,24 @@
 
 import { useMainStore } from "@/store/mainStore";
 import { Book, BookState } from "@/types/Book";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Icons } from "./Icons";
 import Link from "next/link";
 
 const BookDetailsCard = () => {
   const { selectedBookDetails, setSelectedBookDetails } = useMainStore();
+  const [isEditingReview, setIsEditingReview] = useState(false);
+  const [reviewText, setReviewText] = useState("");
+
+  useEffect(() => {
+    if (selectedBookDetails) {
+      setReviewText(selectedBookDetails.review || "");
+    }
+  }, [selectedBookDetails]);
+
+  const handleEditReviewClick = () => {
+    setIsEditingReview(!isEditingReview);
+  };
 
   const updateBookHearts = (score: number) => {
     if (!selectedBookDetails || !selectedBookDetails?.file) return;
@@ -21,7 +33,17 @@ const BookDetailsCard = () => {
     window.api.updateBookData(selectedBookDetails?.file, newBookData);
   };
 
-  const updateBookReview = () => {};
+  const updateBookReview = () => {
+    if (!selectedBookDetails || !selectedBookDetails?.file) return;
+
+    const newBookData: Book = {
+      ...selectedBookDetails,
+      review: reviewText,
+    };
+
+    setSelectedBookDetails(newBookData);
+    window.api.updateBookData(selectedBookDetails?.file, newBookData);
+  };
 
   const updateBookStatus = (newState: BookState) => {
     if (!selectedBookDetails || !selectedBookDetails?.file) return;
@@ -38,7 +60,7 @@ const BookDetailsCard = () => {
   return (
     <div
       id="book-details-card"
-      className="flex flex-col pt-4 pl-8 pb-4 pr-4 gap-6 rounded-lg shadow-md w-[735px] overflow-auto"
+      className="my-12 py-8 flex flex-col pl-8 pb-4 pr-4 gap-6 rounded-lg shadow-md w-[735px] h-[calc(100vh-148px)] overflow-auto"
     >
       <div className="flex flex-row gap-6">
         <div id="cover-and-hearts" className="flex flex-col gap-4">
@@ -189,12 +211,40 @@ const BookDetailsCard = () => {
           </Link>
         </div>
       </div>
+
       <div id="reviews">
         <h3 className="font-inter-bold text-lg">Review</h3>
-        {selectedBookDetails?.review
-          ? selectedBookDetails?.review
-          : "What do you think about this book?"}
+        {isEditingReview ? (
+          <textarea
+            value={reviewText}
+            onChange={(e) => setReviewText(e.target.value)}
+            onBlur={() => {
+              updateBookReview();
+              handleEditReviewClick();
+            }}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                e.preventDefault();
+                updateBookReview();
+                handleEditReviewClick();
+              }
+            }}
+            className="w-full h-44 p-2 rounded-xl border-primary mt-4"
+            autoFocus
+          />
+        ) : (
+          <p
+            onClick={handleEditReviewClick}
+            className="cursor-pointer"
+            style={{ overflowWrap: "break-word" }}
+          >
+            {selectedBookDetails?.review
+              ? selectedBookDetails.review
+              : "What do you think about this book?"}
+          </p>
+        )}
       </div>
+
       <div id="quotes">
         <h3 className="font-inter-bold text-lg">Quotes</h3>
         <ul>

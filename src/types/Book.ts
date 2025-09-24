@@ -12,6 +12,7 @@ export interface Book {
   state: BookState;
   saga?: string;
   progressPage: number;
+  progressPercentage: number;
   favourite: boolean;
   file?: string;
 }
