@@ -1,7 +1,7 @@
 "use client";
 
 import { useMainStore } from "@/store/mainStore";
-import { BookData, BookState } from "@/types/Book";
+import { BookData, BookState, Comment } from "@/types/Book";
 import React, { useEffect, useState } from "react";
 import { Icons } from "../icons/Icons";
 import Link from "next/link";
@@ -285,9 +285,9 @@ const BookDetailsCard = () => {
         <h3 className="font-inter-bold text-lg">Quotes</h3>
         <ul>
           {selectedBookDetails?.quotes.length
-            ? selectedBookDetails?.quotes.map((quote, index) => (
-                <ol key={index}>{quote}</ol>
-              ))
+            ? selectedBookDetails?.quotes.map(
+                (quote: string, index: number) => <ol key={index}>{quote}</ol>
+              )
             : "No quotes already :P"}
         </ul>
       </div>
@@ -295,11 +295,13 @@ const BookDetailsCard = () => {
         <h3 className="font-inter-bold text-lg">Comments</h3>
         <ul>
           {selectedBookDetails?.comments.length
-            ? selectedBookDetails?.comments.map((comment, index) => (
-                <ol key={index}>
-                  Page {comment.page} - {comment.text}
-                </ol>
-              ))
+            ? selectedBookDetails?.comments.map(
+                (comment: Comment, index: number) => (
+                  <ol key={index}>
+                    Page {comment.page} - {comment.text}
+                  </ol>
+                )
+              )
             : "No comments already :P"}
         </ul>
       </div>

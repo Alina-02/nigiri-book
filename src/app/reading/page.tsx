@@ -4,11 +4,16 @@ import { Icons } from "@/components/icons/Icons";
 import AddBook from "@/components/main_page/AddBook";
 import BookCover from "@/components/main_page/BookCover";
 import ShortSelect, { sortOptions } from "@/components/shelfs_page/ShortSelect";
+import { useMainStore } from "@/store/mainStore";
+import { BookState } from "@/types/Book";
 import Link from "next/link";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useState } from "react";
 
 const ReadingBookShelf = () => {
   const [selected, setSelected] = useState(sortOptions[1]);
+
+  const { getBooksByState } = useMainStore();
+  const shelfBooks = getBooksByState(BookState.Reading);
 
   return (
     <div className="flex flex-col h-screen p-4 bg-gray-50">
@@ -18,7 +23,7 @@ const ReadingBookShelf = () => {
         </Link>
         <div className="flex items-centerspace-x-4">
           <h1 className="text-2xl font-inter-bold font-bold text-gray-800">
-            Reading {`(${89})`}
+            Reading {`(${shelfBooks?.length})`}
           </h1>
         </div>
 
@@ -29,7 +34,7 @@ const ReadingBookShelf = () => {
         <div className="grid grid-cols-5 md:grid-cols-6 lg:grid-cols-7 xl:grid-cols-8 gap-4">
           <AddBook />
 
-          {[].map((book, index) => (
+          {shelfBooks?.map((book, index) => (
             <BookCover key={index} book={book} />
           ))}
         </div>
