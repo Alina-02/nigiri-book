@@ -29,7 +29,7 @@ const MinimizeShelf = (props: Props) => {
         first ? "mt-12" : "mt-0"
       }`}
     >
-      <Link href={`/${shelfTitle}`}>
+      <Link href={`/${shelfTitle.toLowerCase()}`}>
         <h3 className="font-inter font-bold text-xl hover:underline">
           {shelfTitle}
         </h3>

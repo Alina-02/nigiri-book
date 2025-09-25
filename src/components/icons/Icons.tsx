@@ -233,4 +233,28 @@ export const Icons = {
       />
     </svg>
   ),
+  backBlack: (props: SVGProps<SVGSVGElement>) => (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={26}
+      height={22}
+      fill="none"
+      {...props}
+    >
+      <path
+        stroke="#000"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={3}
+        d="m7.5 14-6-6 6-6"
+      />
+      <path
+        stroke="#000"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={3}
+        d="M1.5 8H18a6 6 0 1 1 0 12h-1.5"
+      />
+    </svg>
+  ),
 };
