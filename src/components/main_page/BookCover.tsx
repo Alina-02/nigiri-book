@@ -2,10 +2,10 @@
 
 import { useMainStore } from "@/store/mainStore";
 import React from "react";
-import { Book } from "@/types/Book";
+import { BookData } from "@/types/Book";
 
 interface Props {
-  book: Book;
+  book: BookData;
 }
 
 const BookCover = (props: Props) => {

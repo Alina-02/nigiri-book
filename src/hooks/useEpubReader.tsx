@@ -1,13 +1,12 @@
 // hooks/useEpubReader.ts
 import { useEffect, useRef } from "react";
 import ePub, { Book, Rendition } from "epubjs";
-import { useMainStore } from "@/store/mainStore";
-import { Book as BookType, BookState } from "@/types/Book";
+import { BookData, BookState } from "@/types/Book";
 
 export const useEpubReader = (
   viewerRef: React.RefObject<HTMLDivElement> | null,
-  selectedBookDetails: BookType | null,
-  setSelectedBookDetails: (book: BookType | null) => void
+  selectedBookDetails: BookData | null,
+  setSelectedBookDetails: (book: BookData | null) => void
 ) => {
   const bookRef = useRef<Book | null>(null);
   const renditionRef = useRef<Rendition | null>(null);
@@ -26,7 +25,7 @@ export const useEpubReader = (
       try {
         if (!selectedBookDetails.file) return;
 
-        // Clean up any existing book/rendition
+        // clean up any existing book/rendition
         if (renditionRef.current) {
           renditionRef.current.destroy();
           renditionRef.current = null;

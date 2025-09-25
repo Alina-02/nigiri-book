@@ -1,19 +1,35 @@
 "use client";
 
 import { useMainStore } from "@/store/mainStore";
-import { Book, BookState } from "@/types/Book";
+import { BookData, BookState } from "@/types/Book";
 import React, { useEffect, useState } from "react";
-import { Icons } from "./Icons";
+import { Icons } from "../icons/Icons";
 import Link from "next/link";
+import {
+  getBookCoverUrl,
+  getEpubFromBookData,
+} from "@/utils/getEpubFromBookData";
+import Image from "next/image";
 
 const BookDetailsCard = () => {
   const { selectedBookDetails, setSelectedBookDetails } = useMainStore();
   const [isEditingReview, setIsEditingReview] = useState(false);
   const [reviewText, setReviewText] = useState("");
 
+  const [cover, setCover] = useState<string | null>(null);
+  console.log(cover);
   useEffect(() => {
+    setCover(null);
     if (selectedBookDetails) {
       setReviewText(selectedBookDetails.review || "");
+
+      getEpubFromBookData(selectedBookDetails).then((epub) => {
+        if (!epub) return;
+        getBookCoverUrl(epub).then((c) => {
+          if (!c) return;
+          setCover(c);
+        });
+      });
     }
   }, [selectedBookDetails]);
 
@@ -24,7 +40,7 @@ const BookDetailsCard = () => {
   const updateBookHearts = (score: number) => {
     if (!selectedBookDetails || !selectedBookDetails?.file) return;
 
-    const newBookData: Book = {
+    const newBookData: BookData = {
       ...selectedBookDetails,
       valoration: score,
     };
@@ -36,7 +52,7 @@ const BookDetailsCard = () => {
   const updateBookReview = () => {
     if (!selectedBookDetails || !selectedBookDetails?.file) return;
 
-    const newBookData: Book = {
+    const newBookData: BookData = {
       ...selectedBookDetails,
       review: reviewText,
     };
@@ -48,7 +64,7 @@ const BookDetailsCard = () => {
   const updateBookStatus = (newState: BookState) => {
     if (!selectedBookDetails || !selectedBookDetails?.file) return;
 
-    const newBookData: Book = {
+    const newBookData: BookData = {
       ...selectedBookDetails,
       state: newState,
     };
@@ -64,10 +80,24 @@ const BookDetailsCard = () => {
     >
       <div className="flex flex-row gap-6">
         <div id="cover-and-hearts" className="flex flex-col gap-4">
-          <div
-            id="cover"
-            className="w-[269px] h-[429px] bg-emerald-500 rounded-xl"
-          ></div>
+          {cover ? (
+            <Image
+              src={cover}
+              alt={`Cover image for ${
+                selectedBookDetails?.title || "the book"
+              }`}
+              width={228}
+              height={343}
+              className="w-[269px] h-[343px] rounded-xl"
+              style={{ objectFit: "cover" }}
+            />
+          ) : (
+            <div
+              id="cover"
+              className=" bg-primary rounded-xl"
+              style={{ width: "228px", height: "343px" }}
+            />
+          )}
           <div id="hearts" className="flex flex-row gap-1 justify-between px-8">
             {selectedBookDetails?.valoration &&
             selectedBookDetails?.valoration >= 1 ? (
@@ -205,6 +235,12 @@ const BookDetailsCard = () => {
           </div>
           <Link
             href="/read"
+            onClick={() => {
+              setSelectedBookDetails({
+                ...selectedBookDetails,
+                lastOpened: Date.now(),
+              });
+            }}
             className="p-2 rounded-lg w-full bg-primary flex justify-center items-center text-white"
           >
             Read

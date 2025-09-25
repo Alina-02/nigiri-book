@@ -1,6 +1,5 @@
 import React from "react";
-import { Icons } from "./Icons";
-import Title from "./basic/Title";
+import { Icons } from "../icons/Icons";
 
 const TopBar = () => {
   return (

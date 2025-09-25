@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect } from "react";
-import { Icons } from "@/components/Icons";
+import { Icons } from "@/components/icons/Icons";
 import Title from "@/components/basic/Title";
 import Text from "@/components/basic/Text";
 

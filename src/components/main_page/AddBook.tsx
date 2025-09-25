@@ -3,7 +3,7 @@
 import { useMainStore } from "@/store/mainStore";
 import React from "react";
 import { Book } from "@/types/Book";
-import { Icons } from "./Icons";
+import { Icons } from "../icons/Icons";
 
 const BookCover = () => {
   const { selectedBookDetails, setSelectedBookDetails } = useMainStore();

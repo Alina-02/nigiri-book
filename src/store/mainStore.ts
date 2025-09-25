@@ -1,7 +1,11 @@
 import { books } from "@/sampleData/sampleBooks";
 import { Book } from "@/types/Book";
+import {
+  clearSelectedBookDetails,
+  updateBookOnOpen,
+} from "@/utils/reorderBooksByLastAccess";
 import { create } from "zustand";
-interface MainStore {
+export interface MainStore {
   selectedBookDetails: Book | null;
   setSelectedBookDetails: (book: Book | null) => void;
 
@@ -15,22 +19,10 @@ export const useMainStore = create<MainStore>()((set) => ({
   setBooks: (allBooks: Book[]) => set((state) => ({ books: allBooks })),
   setSelectedBookDetails: (book: Book | null) => {
     set((state) => {
-      if (book) {
-        const bookIndex = state.books.findIndex((b) => b.file === book.file);
-
-        if (bookIndex !== -1) {
-          const updatedBooks = [...state.books];
-          updatedBooks[bookIndex] = book;
-          return {
-            selectedBookDetails: book,
-            books: updatedBooks,
-          };
-        }
+      if (!book) {
+        return clearSelectedBookDetails();
       }
-
-      return {
-        selectedBookDetails: book,
-      };
+      return updateBookOnOpen(state, book);
     });
   },
 }));

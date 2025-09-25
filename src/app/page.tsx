@@ -1,7 +1,7 @@
 "use client";
 
-import BookDetailsCard from "@/components/BookDetailsCard";
-import MinimizeShelf, { ShelfType } from "@/components/MinimizeShelf";
+import BookDetailsCard from "@/components/main_page/BookDetailsCard";
+import MinimizeShelf, { ShelfType } from "@/components/main_page/MinimizeShelf";
 import { useMainStore } from "@/store/mainStore";
 import { useEffect } from "react";
 

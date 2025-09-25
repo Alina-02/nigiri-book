@@ -1,20 +1,18 @@
 "use client";
 
 import { useRef } from "react";
-import ReadFloatingMenu from "@/components/ReadFloatingMenu";
 import { useMainStore } from "@/store/mainStore";
 import React from "react";
-import ReadMenu from "@/components/ReadMenu";
 import { useEpubReader } from "@/hooks/useEpubReader";
+import ReadFloatingMenu from "@/components/read_page/ReadFloatingMenu";
+import ReadMenu from "@/components/read_page/ReadMenu";
 
 const Read = () => {
   const { selectedBookDetails, setSelectedBookDetails } = useMainStore();
   const viewerRef = useRef<HTMLDivElement>(null);
 
-  // Use the custom hook to manage the ePub logic
   useEpubReader(viewerRef, selectedBookDetails, setSelectedBookDetails);
 
-  // Derive page and percentage from the store
   const page = selectedBookDetails?.progressPage || 0;
   const percentage = selectedBookDetails?.progressPercentage || 0;
 

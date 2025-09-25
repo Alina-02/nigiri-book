@@ -1,4 +1,6 @@
-export interface Book {
+import { Book } from "epubjs";
+
+export interface BookData {
   title: string;
   author: string;
   initDate: Date[];
@@ -15,6 +17,8 @@ export interface Book {
   progressPercentage: number;
   favourite: boolean;
   file?: string;
+  lastOpened?: number;
+  epub?: Book;
 }
 
 export enum BookState {

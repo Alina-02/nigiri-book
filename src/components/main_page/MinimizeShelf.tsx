@@ -3,6 +3,7 @@ import { BookState } from "@/types/Book";
 import BookCover from "./BookCover";
 import AddBook from "./AddBook";
 import { useMainStore } from "@/store/mainStore";
+import Link from "next/link";
 
 interface Props {
   shelfTitle: string;
@@ -28,7 +29,11 @@ const MinimizeShelf = (props: Props) => {
         first ? "mt-12" : "mt-0"
       }`}
     >
-      <h3 className="font-inter font-bold text-xl">{shelfTitle}</h3>
+      <Link href={`/${shelfTitle}`}>
+        <h3 className="font-inter font-bold text-xl hover:underline">
+          {shelfTitle}
+        </h3>
+      </Link>
       <div className="flex flex-row gap-3 overflow-hidden">
         <AddBook />
         {books

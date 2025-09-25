@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { Icons } from "./Icons";
 import { useMainStore } from "@/store/mainStore";
+import { Icons } from "../icons/Icons";
 
 enum ReadMenuState {
   MENU = "Menu",
