@@ -5,6 +5,8 @@ import AddBook from "./AddBook";
 import { useMainStore } from "@/store/mainStore";
 import Link from "next/link";
 
+import "../../styles/underlineButtonAnimation.css";
+
 interface Props {
   shelfTitle: string;
   shelfType: ShelfType;
@@ -25,12 +27,12 @@ const MinimizeShelf = (props: Props) => {
 
   return (
     <div
-      className={`flex flex-col gap-3  ${last ? "mb-12" : "mb-0"} ${
-        first ? "mt-12" : "mt-0"
+      className={`flex flex-col gap-3  ${last ? "mb-6" : "mb-0"} ${
+        first ? "mt-6" : "mt-0"
       }`}
     >
-      <Link href={`/${shelfTitle.toLowerCase()}`}>
-        <h3 className="font-inter font-bold text-xl hover:underline">
+      <Link href={`/${shelfTitle.toLowerCase()}`} className="w-fit">
+        <h3 className="font-inter font-bold text-xl btn-underline">
           {shelfTitle}
         </h3>
       </Link>

@@ -15,9 +15,9 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="flex flex-row pl-16 mr-4 gap-4">
+    <div className="flex flex-row pl-16 mr-4 gap-4 my-4">
       <div
-        className="flex flex-col gap-8 overflow-y-auto h-[calc(100vh-68px)]"
+        className="flex flex-col gap-8 overflow-y-auto h-[calc(100vh-98px)]"
         style={{ width: selectedBookDetails ? "60%" : "100%" }}
       >
         <MinimizeShelf

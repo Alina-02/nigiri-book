@@ -114,3 +114,21 @@ h1 {
   font-family: Inter;
   font-weight: 700; /* Usa la fuente Inter Bold */
 }
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #e5e5e5;
+  border-radius: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #8b6b4f;
+  border-radius: 8px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #6d523e;
+}

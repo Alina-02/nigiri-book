@@ -17,7 +17,7 @@ const BookDetailsCard = () => {
   const [reviewText, setReviewText] = useState("");
 
   const [cover, setCover] = useState<string | null>(null);
-  console.log(cover);
+
   useEffect(() => {
     setCover(null);
     if (selectedBookDetails) {
@@ -31,7 +31,7 @@ const BookDetailsCard = () => {
         });
       });
     }
-  }, [selectedBookDetails]);
+  }, [selectedBookDetails?.file]);
 
   const handleEditReviewClick = () => {
     setIsEditingReview(!isEditingReview);
@@ -88,8 +88,14 @@ const BookDetailsCard = () => {
               }`}
               width={228}
               height={343}
-              className="w-[269px] h-[343px] rounded-xl"
-              style={{ objectFit: "cover" }}
+              className="rounded-xl"
+              style={{
+                objectFit: "cover",
+                maxHeight: "343px",
+                minHeight: "343px",
+                maxWidth: "228px",
+                minWidth: "228px",
+              }}
             />
           ) : (
             <div
