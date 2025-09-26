@@ -79,7 +79,15 @@ const BookDetailsCard = () => {
       className="my-12 py-8 flex flex-col pl-8 pb-4 pr-4 gap-6 rounded-lg shadow-md w-[735px] h-[calc(100vh-148px)] overflow-auto"
     >
       <div className="flex flex-row gap-6">
-        <div id="cover-and-hearts" className="flex flex-col gap-4">
+        <div id="cover-and-hearts" className="flex flex-col gap-4 relative">
+          <button
+            onClick={() => {
+              setSelectedBookDetails(null);
+            }}
+            className="cursor-pointer z-10 top-4 left-0 bg-primary absolute w-[54px] h-[54px] rounded-br-2xl rounded-tr-2xl flex justify-center items-center"
+          >
+            <Icons.back />
+          </button>
           {cover ? (
             <Image
               src={cover}
