@@ -76,7 +76,8 @@ const BookDetailsCard = () => {
   return (
     <div
       id="book-details-card"
-      className="my-12 py-8 flex flex-col pl-8 pb-4 pr-4 gap-6 rounded-lg shadow-md w-[735px] h-[calc(100vh-148px)] overflow-auto"
+      className="border-2 py-8 flex flex-col pl-8 pb-4 pr-4 gap-6 rounded-lg shadow-md w-[735px] h-[calc(100vh-128px)] overflow-auto"
+      style={{ marginTop: "16px" }}
     >
       <div className="flex flex-row gap-6">
         <div id="cover-and-hearts" className="flex flex-col gap-4 relative">

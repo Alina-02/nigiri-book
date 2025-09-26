@@ -20,14 +20,37 @@ export default function Home() {
         className="flex flex-col gap-8 overflow-y-auto h-[calc(100vh-98px)]"
         style={{ width: selectedBookDetails ? "60%" : "100%" }}
       >
-        <MinimizeShelf
-          shelfTitle="Reading"
-          shelfType={ShelfType.Reading}
-          first
-        />
-        <MinimizeShelf shelfTitle="Pending" shelfType={ShelfType.Pending} />
-        <MinimizeShelf shelfTitle="Favourite" shelfType={ShelfType.Favourite} />
-        <MinimizeShelf shelfTitle="Read" shelfType={ShelfType.Finished} last />
+        <div
+          className={`flex justify-between gap-4 
+                    ${selectedBookDetails ? "flex-col" : "flex-row"} 
+                    max-[1063px]:flex-col`}
+        >
+          <MinimizeShelf
+            shelfTitle="Reading"
+            shelfType={ShelfType.Reading}
+            first
+          />
+          <MinimizeShelf
+            shelfTitle="Pending"
+            shelfType={ShelfType.Pending}
+            first
+          />
+        </div>
+        <div
+          className={`flex justify-between gap-4 
+                     ${selectedBookDetails ? "flex-col" : "flex-row"} 
+                     max-[1063px]:flex-col`}
+        >
+          <MinimizeShelf
+            shelfTitle="Favourite"
+            shelfType={ShelfType.Favourite}
+          />
+          <MinimizeShelf
+            shelfTitle="Read"
+            shelfType={ShelfType.Finished}
+            last
+          />
+        </div>
       </div>
       <div className="h-[calc(100vh-68px)]">
         {selectedBookDetails && <BookDetailsCard />}
