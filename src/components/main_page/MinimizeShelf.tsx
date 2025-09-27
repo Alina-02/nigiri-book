@@ -33,8 +33,12 @@ const getBookType = (shelfType: string) => {
 
 const MinimizeShelf = (props: Props) => {
   const { shelfTitle, shelfType, first, last } = props;
-  const { getBooksByState, getFavoriteBooks, selectedBookDetails } =
-    useMainStore();
+  const {
+    getBooksByState,
+    getFavoriteBooks,
+    selectedBookDetails,
+    setSelectedBookDetails,
+  } = useMainStore();
   const books =
     shelfType === ShelfType.Favourite
       ? getFavoriteBooks()
@@ -83,7 +87,13 @@ const MinimizeShelf = (props: Props) => {
         ${last ? "mb-6" : "mb-0"} 
         ${first ? "mt-6" : "mt-0"}`}
     >
-      <Link href={`/${shelfTitle.toLowerCase()}`} className="w-fit">
+      <Link
+        href={`/${shelfTitle.toLowerCase()}`}
+        onClick={() => {
+          setSelectedBookDetails(null, false);
+        }}
+        className="w-fit"
+      >
         <h3 className="font-inter font-bold text-xl btn-underline">
           {shelfTitle}
         </h3>

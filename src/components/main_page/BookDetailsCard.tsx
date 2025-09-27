@@ -200,7 +200,7 @@ const BookDetailsCard = () => {
             <h2 id="title" className="text-3xl font-inter">
               {selectedBookDetails?.saga
                 ? selectedBookDetails?.saga + " - " + selectedBookDetails?.title
-                : selectedBookDetails?.title}
+                : selectedBookDetails?.title}{" "}
             </h2>
             <p id="author" className="text-xl font-inter-extralight">
               {selectedBookDetails?.author}

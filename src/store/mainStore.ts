@@ -28,6 +28,7 @@ export const useMainStore = create<MainStore>()((set, get) => ({
         return updateBookOnOpen(state, book);
       } else {
         return {
+          books: state.books,
           selectedBookDetails: book,
         };
       }
