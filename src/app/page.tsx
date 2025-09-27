@@ -17,8 +17,9 @@ export default function Home() {
   return (
     <div className="flex flex-row pl-16 mr-4 gap-4 my-4">
       <div
-        className="flex flex-col gap-8 overflow-y-auto h-[calc(100vh-98px)]"
-        style={{ width: selectedBookDetails ? "60%" : "100%" }}
+        className={`flex flex-col gap-8 overflow-y-auto h-[calc(100vh-98px)] max-[1139px]:w-0 ${
+          selectedBookDetails ? "w-3/5" : "w-full"
+        }`}
       >
         <div
           className={`flex justify-between gap-4 

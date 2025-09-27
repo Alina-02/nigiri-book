@@ -83,7 +83,7 @@ const BookDetailsCard = () => {
         <div id="cover-and-hearts" className="flex flex-col gap-4 relative">
           <button
             onClick={() => {
-              setSelectedBookDetails(null);
+              setSelectedBookDetails(null, true);
             }}
             className="cursor-pointer z-10 top-4 left-0 bg-primary absolute w-[54px] h-[54px] rounded-br-2xl rounded-tr-2xl flex justify-center items-center"
           >

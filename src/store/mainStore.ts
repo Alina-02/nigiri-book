@@ -6,7 +6,7 @@ import {
 import { create } from "zustand";
 export interface MainStore {
   selectedBookDetails: BookData | null;
-  setSelectedBookDetails: (book: BookData | null) => void;
+  setSelectedBookDetails: (book: BookData | null, updateTime: boolean) => void;
 
   books: BookData[];
   setBooks: (allBooks: BookData[]) => void;
@@ -19,12 +19,18 @@ export const useMainStore = create<MainStore>()((set, get) => ({
   books: [],
   selectedBookDetails: null,
   setBooks: (allBooks: BookData[]) => set((state) => ({ books: allBooks })),
-  setSelectedBookDetails: (book: BookData | null) => {
+  setSelectedBookDetails: (book: BookData | null, updateTime: boolean) => {
     set((state) => {
       if (!book) {
         return clearSelectedBookDetails();
       }
-      return updateBookOnOpen(state, book);
+      if (updateTime) {
+        return updateBookOnOpen(state, book);
+      } else {
+        return {
+          selectedBookDetails: book,
+        };
+      }
     });
   },
   getBooksByState: (targetState: BookState): BookData[] => {

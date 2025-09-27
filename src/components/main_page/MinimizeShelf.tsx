@@ -44,18 +44,28 @@ const MinimizeShelf = (props: Props) => {
 
   useEffect(() => {
     const updateVisible = () => {
-      if (window.innerWidth >= 583 && window.innerWidth < 733) {
-        setVisible(2);
-      } else if (window.innerWidth >= 733 && window.innerWidth < 885) {
-        setVisible(3);
-      } else if (window.innerWidth >= 885 && window.innerWidth < 1063) {
-        setVisible(4);
-      } else if (window.innerWidth >= 1063 && window.innerWidth < 1360) {
-        setVisible(2);
-      } else if (window.innerWidth >= 1360 && window.innerWidth < 1661) {
-        setVisible(3);
-      } else if (window.innerWidth >= 1661 && window.innerWidth < 1063) {
-        setVisible(4);
+      if (selectedBookDetails) {
+        if (window.innerWidth >= 1478 && window.innerWidth < 1673) {
+          setVisible(2);
+        } else if (window.innerWidth >= 1673 && window.innerWidth < 1638) {
+          setVisible(3);
+        } else if (window.innerWidth >= 1638) {
+          setVisible(4);
+        }
+      } else {
+        if (window.innerWidth >= 583 && window.innerWidth < 733) {
+          setVisible(2);
+        } else if (window.innerWidth >= 733 && window.innerWidth < 885) {
+          setVisible(3);
+        } else if (window.innerWidth >= 885 && window.innerWidth < 1063) {
+          setVisible(4);
+        } else if (window.innerWidth >= 1063 && window.innerWidth < 1360) {
+          setVisible(2);
+        } else if (window.innerWidth >= 1360 && window.innerWidth < 1661) {
+          setVisible(3);
+        } else if (window.innerWidth >= 1661) {
+          setVisible(4);
+        }
       }
     };
 

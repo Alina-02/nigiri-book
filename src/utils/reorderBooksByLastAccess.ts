@@ -1,5 +1,5 @@
 import { MainStore } from "@/store/mainStore";
-import { Book } from "@/types/Book";
+import { BookData } from "@/types/Book";
 
 /**
  * Updates a single book's 'lastOpened' timestamp, and sorts the entire books array.
@@ -8,8 +8,8 @@ import { Book } from "@/types/Book";
  * @returns An object containing the new 'books' array and 'selectedBookDetails' object.
  */
 export const updateBookOnOpen = (
-  state: Pick<MainStore, "books" | "selectedBookDetails">, // Only need these properties from state
-  bookToOpen: Book
+  state: Pick<MainStore, "books" | "selectedBookDetails">,
+  bookToOpen: BookData
 ): Pick<MainStore, "books" | "selectedBookDetails"> => {
   // 1. Create the new book data with the timestamp
   const bookWithTimestamp = {
@@ -22,14 +22,12 @@ export const updateBookOnOpen = (
     (b) => b.file === bookWithTimestamp.file
   );
 
-  // 3. Create a new copy of the books array (immutability)
+  // 3. Create a new copy of the books array
   const updatedBooks = [...state.books];
 
   if (bookIndex !== -1) {
-    // Found: Replace the old book with the updated one
     updatedBooks[bookIndex] = bookWithTimestamp;
   } else {
-    // Not Found: Add the book (optional, depending on your app logic)
     updatedBooks.push(bookWithTimestamp);
   }
 
@@ -37,7 +35,7 @@ export const updateBookOnOpen = (
   const sortedBooks = updatedBooks.sort((a, b) => {
     const timeA = a.lastOpened || 0;
     const timeB = b.lastOpened || 0;
-    return timeB - timeA; // Descending sort (newest first)
+    return timeB - timeA;
   });
 
   // 5. Return the new state structure

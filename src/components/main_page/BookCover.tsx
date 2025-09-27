@@ -14,16 +14,18 @@ const BookCover = (props: Props) => {
 
   return (
     <div
-      className="h-[220px] w-[138px] min-w-[138px] border-2 bg-amber-300 rounded-2xl cursor-pointer"
+      className="h-[220px] w-[138px] min-w-[138px] border-2 bg-amber-300 rounded-2xl cursor-pointer flex justify-center items-center text-center"
       style={{ backgroundImage: `${book?.cover}` }}
       onClick={() => {
         if (!selectedBookDetails || selectedBookDetails.title !== book.title) {
-          setSelectedBookDetails(book);
+          setSelectedBookDetails(book, false);
         } else {
-          setSelectedBookDetails(null);
+          setSelectedBookDetails(null, false);
         }
       }}
-    ></div>
+    >
+      {book.title}
+    </div>
   );
 };
 
