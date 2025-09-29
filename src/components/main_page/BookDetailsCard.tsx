@@ -236,16 +236,18 @@ const BookDetailsCard = () => {
                 In progress
               </div>
             )}
-
-            <p id="dates">
-              {selectedBookDetails?.initDate[
-                selectedBookDetails?.initDate.length - 1
-              ]?.toDateString() +
-                " - " +
-                selectedBookDetails?.endDate[
-                  selectedBookDetails?.endDate.length - 1
-                ]?.toDateString()}
-            </p>
+            {selectedBookDetails?.initDate.length &&
+              selectedBookDetails?.endDate.length && (
+                <p id="dates">
+                  {selectedBookDetails?.initDate[
+                    selectedBookDetails?.initDate.length - 1
+                  ]?.toDateString() +
+                    " - " +
+                    selectedBookDetails?.endDate[
+                      selectedBookDetails?.endDate.length - 1
+                    ]?.toDateString()}
+                </p>
+              )}
             <p id="summary">{selectedBookDetails?.description}</p>
           </div>
           <Link
