@@ -3,7 +3,7 @@ declare const MAIN_WINDOW_VITE_NAME: string;
 
 declare interface Window {
   api: {
-    showOpenBook: () => void;
+    addNewBook: () => Promise<Book[] | null>;
     getBooksData: () => Promise<Books[]>;
     getBookFile: (filePath: string) => Promise<string | undefined>;
     updateBookData: (filePath: string, newBookData: book) => Promise<void>;

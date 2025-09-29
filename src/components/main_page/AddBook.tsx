@@ -5,10 +5,15 @@ import React from "react";
 import { Icons } from "../icons/Icons";
 
 const BookCover = () => {
-  const { selectedBookDetails, setSelectedBookDetails } = useMainStore();
+  const { setBooks } = useMainStore();
 
   const addNewBook = () => {
-    window.api.showOpenBook();
+    window.api.addNewBook().then((newBooks) => {
+      console.log(newBooks);
+
+      if (!newBooks) return;
+      setBooks(newBooks);
+    });
   };
 
   return (

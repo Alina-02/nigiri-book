@@ -47,10 +47,10 @@ app.on("ready", () => {
   createWindow();
 });
 
-ipcMain.on("show-open-dialog", (event) => {
+ipcMain.handle("add-new-book", (event) => {
   const browserWindow = BrowserWindow.fromWebContents(event.sender);
   if (!browserWindow) return;
-  showOpenBook(browserWindow);
+  return showOpenBook(browserWindow);
 });
 
 ipcMain.handle("get-books-data", (event) => {
@@ -75,7 +75,7 @@ const showOpenBook = async (browserWindow) => {
 
   const [filePath] = result.filePaths;
 
-  saveNewBook(browserWindow, filePath);
+  return saveNewBook(browserWindow, filePath);
 };
 
 const saveNewBook = async (browserWindow, filePath) => {
@@ -121,6 +121,7 @@ const saveNewBook = async (browserWindow, filePath) => {
     state: "PENDANT",
     progressPage: 0,
     favourite: false,
+    lastOpened: Date.now(),
   };
 
   try {
@@ -140,13 +141,13 @@ const saveNewBook = async (browserWindow, filePath) => {
       books = JSON.parse(data);
     }
 
-    books.push(book);
+    books.unshift(book);
 
     fs.writeFileSync(BOOKS_FILE, JSON.stringify(books, null, 2), "utf-8");
-    return { success: true, newBooks: books };
+    return books;
   } catch (err) {
     console.error(err);
-    return { success: false, error: err };
+    return null;
   }
 };
 
