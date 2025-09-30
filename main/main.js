@@ -47,10 +47,10 @@ app.on("ready", () => {
   createWindow();
 });
 
-ipcMain.handle("add-new-book", (event) => {
+ipcMain.handle("add-new-book", (event, shelfType) => {
   const browserWindow = BrowserWindow.fromWebContents(event.sender);
   if (!browserWindow) return;
-  return showOpenBook(browserWindow);
+  return showOpenBook(browserWindow, shelfType);
 });
 
 ipcMain.handle("get-books-data", (event) => {
@@ -65,7 +65,7 @@ ipcMain.on("update-book-data", (_, filePath, newBookData) => {
   updateBookData(filePath, newBookData);
 });
 
-const showOpenBook = async (browserWindow) => {
+const showOpenBook = async (browserWindow, shelfType) => {
   const result = await dialog.showOpenDialog(browserWindow, {
     properties: ["openFile"],
     filters: [{ name: "Book file", extensions: ["pdf", "epub"] }],
@@ -75,10 +75,10 @@ const showOpenBook = async (browserWindow) => {
 
   const [filePath] = result.filePaths;
 
-  return saveNewBook(browserWindow, filePath);
+  return saveNewBook(browserWindow, filePath, shelfType);
 };
 
-const saveNewBook = async (browserWindow, filePath) => {
+const saveNewBook = async (browserWindow, filePath, shelfType) => {
   // read epub as zip
   const zip = new AdmZip(filePath);
 
@@ -118,12 +118,13 @@ const saveNewBook = async (browserWindow, filePath) => {
     review: undefined,
     quotes: [],
     comments: [],
-    state: "PENDANT",
+    state: shelfType !== "FAVOURITE" ? shelfType : "PENDING",
     progressPage: 0,
-    favourite: false,
+    favourite: shelfType === "FAVOURITE",
     lastOpened: Date.now(),
   };
-
+  console.log(shelfType, "type");
+  console.log(shelfType !== "FAVOURITE" ? shelfType : "PENDING");
   try {
     if (!fs.existsSync(BOOKS_FOLDER)) {
       fs.mkdirSync(BOOKS_FOLDER, { recursive: true });

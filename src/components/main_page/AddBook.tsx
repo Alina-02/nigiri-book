@@ -3,14 +3,18 @@
 import { useMainStore } from "@/store/mainStore";
 import React from "react";
 import { Icons } from "../icons/Icons";
+import { ShelfType } from "./MinimizeShelf";
 
-const BookCover = () => {
+interface Props {
+  shelfType: ShelfType;
+}
+
+const BookCover = (props: Props) => {
+  const { shelfType } = props;
   const { setBooks } = useMainStore();
 
   const addNewBook = () => {
-    window.api.addNewBook().then((newBooks) => {
-      console.log(newBooks);
-
+    window.api.addNewBook(shelfType).then((newBooks) => {
       if (!newBooks) return;
       setBooks(newBooks);
     });

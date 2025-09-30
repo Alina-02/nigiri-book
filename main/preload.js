@@ -8,8 +8,8 @@ contextBridge.exposeInMainWorld("api", {
   send: (channel, args) => {
     ipcRenderer.send(channel, args);
   },
-  addNewBook: () => {
-    return ipcRenderer.invoke("add-new-book");
+  addNewBook: (shelfType) => {
+    return ipcRenderer.invoke("add-new-book", shelfType);
   },
   getBooksData: () => {
     return ipcRenderer.invoke("get-books-data");

@@ -62,6 +62,11 @@ export const useEpubReader = (
         await book.ready;
         await book.locations.generate(1000);
 
+        const startLocation =
+          selectedBookDetails.progressPage ||
+          book.navigation?.toc?.[0]?.href ||
+          undefined;
+
         const startCfi = book.navigation?.toc?.[0]?.href;
         if (startCfi) {
           rendition.display(startCfi);
@@ -108,5 +113,5 @@ export const useEpubReader = (
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, []);
 
-  return { rendition: renditionRef.current };
+  return renditionRef.current;
 };

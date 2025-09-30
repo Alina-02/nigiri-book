@@ -99,7 +99,7 @@ const MinimizeShelf = (props: Props) => {
         </h3>
       </Link>
       <div className="flex flex-row gap-3 overflow-hidden">
-        <AddBook />
+        <AddBook shelfType={shelfType} />
         {books?.slice(0, visible).map((book, index) => (
           <BookCover
             key={book.title.trim().toLowerCase() + index}

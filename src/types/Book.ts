@@ -15,6 +15,7 @@ export interface BookData {
   saga?: string;
   progressPage: number;
   progressPercentage: number;
+  progressCfi?: Location;
   favourite: boolean;
   file?: string;
   lastOpened?: number;
@@ -23,8 +24,8 @@ export interface BookData {
 
 export enum BookState {
   Reading = "READING",
-  Read = "READ",
-  Pendant = "PENDANT",
+  Read = "FINISHED",
+  Pendant = "PENDING",
 }
 
 export interface Comment {
