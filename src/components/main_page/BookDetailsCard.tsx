@@ -45,7 +45,19 @@ const BookDetailsCard = () => {
       valoration: score,
     };
 
-    setSelectedBookDetails(newBookData);
+    setSelectedBookDetails(newBookData, false);
+    window.api.updateBookData(selectedBookDetails?.file, newBookData);
+  };
+
+  const updateBookFavourite = (fav: boolean) => {
+    if (!selectedBookDetails || !selectedBookDetails?.file) return;
+
+    const newBookData: BookData = {
+      ...selectedBookDetails,
+      favourite: fav,
+    };
+
+    setSelectedBookDetails(newBookData, false);
     window.api.updateBookData(selectedBookDetails?.file, newBookData);
   };
 
@@ -196,7 +208,7 @@ const BookDetailsCard = () => {
           </div>
         </div>
         <div id="basic-info" className="flex flex-col justify-between w-full ">
-          <div className="flex flex-col gap-1 overflow-auto">
+          <div className="flex flex-col gap-1 ">
             <h2 id="title" className="text-3xl font-inter">
               {selectedBookDetails?.saga
                 ? selectedBookDetails?.saga + " - " + selectedBookDetails?.title
@@ -248,20 +260,42 @@ const BookDetailsCard = () => {
                     ]?.toDateString()}
                 </p>
               )}
-            <p id="summary">{selectedBookDetails?.description}</p>
+            <p
+              id="summary"
+              className="max-h-60 overflow-auto text-justify pr-2"
+            >
+              {selectedBookDetails?.description}
+            </p>
           </div>
-          <Link
-            href="/read"
-            onClick={() => {
-              setSelectedBookDetails({
-                ...selectedBookDetails,
-                lastOpened: Date.now(),
-              });
-            }}
-            className="p-2 rounded-lg w-full bg-primary flex justify-center items-center text-white"
-          >
-            Read
-          </Link>
+          <div className="flex flex-row gap-3 mt-2 items-center">
+            <Link
+              href="/read"
+              onClick={() => {
+                setSelectedBookDetails({
+                  ...selectedBookDetails,
+                  lastOpened: Date.now(),
+                });
+              }}
+              className="p-2 rounded-lg w-full bg-primary flex justify-center items-center text-white"
+            >
+              Read
+            </Link>
+            {selectedBookDetails?.favourite ? (
+              <Icons.filledStar
+                className="cursor-pointer"
+                onClick={() => {
+                  updateBookFavourite(false);
+                }}
+              />
+            ) : (
+              <Icons.star
+                className="cursor-pointer"
+                onClick={() => {
+                  updateBookFavourite(true);
+                }}
+              />
+            )}
+          </div>
         </div>
       </div>
 

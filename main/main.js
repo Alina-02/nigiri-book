@@ -123,8 +123,7 @@ const saveNewBook = async (browserWindow, filePath, shelfType) => {
     favourite: shelfType === "FAVOURITE",
     lastOpened: Date.now(),
   };
-  console.log(shelfType, "type");
-  console.log(shelfType !== "FAVOURITE" ? shelfType : "PENDING");
+
   try {
     if (!fs.existsSync(BOOKS_FOLDER)) {
       fs.mkdirSync(BOOKS_FOLDER, { recursive: true });
