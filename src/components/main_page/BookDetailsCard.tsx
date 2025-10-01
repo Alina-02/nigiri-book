@@ -10,6 +10,7 @@ import {
   getEpubFromBookData,
 } from "@/utils/getEpubFromBookData";
 import Image from "next/image";
+import DOMPurify from "dompurify";
 
 const BookDetailsCard = () => {
   const { selectedBookDetails, setSelectedBookDetails } = useMainStore();
@@ -17,6 +18,10 @@ const BookDetailsCard = () => {
   const [reviewText, setReviewText] = useState("");
 
   const [cover, setCover] = useState<string | null>(null);
+
+  const cleanDescription =
+    selectedBookDetails?.description ??
+    DOMPurify.sanitize(selectedBookDetails.description);
 
   useEffect(() => {
     setCover(null);
@@ -248,8 +253,9 @@ const BookDetailsCard = () => {
                 In progress
               </div>
             )}
-            {selectedBookDetails?.initDate.length &&
-              selectedBookDetails?.endDate.length && (
+            {selectedBookDetails?.initDate &&
+              selectedBookDetails?.initDate.length > 0 &&
+              selectedBookDetails?.endDate.length > 0 && (
                 <p id="dates">
                   {selectedBookDetails?.initDate[
                     selectedBookDetails?.initDate.length - 1
@@ -262,10 +268,9 @@ const BookDetailsCard = () => {
               )}
             <p
               id="summary"
-              className="max-h-60 overflow-auto text-justify pr-2"
-            >
-              {selectedBookDetails?.description}
-            </p>
+              dangerouslySetInnerHTML={{ __html: cleanDescription }}
+              className="max-h-60 overflow-auto text-justify pr-2 prose max-w-none"
+            />
           </div>
           <div className="flex flex-row gap-3 mt-2 items-center">
             <Link

@@ -47,11 +47,12 @@ const MinimizeShelf = (props: Props) => {
   const [visible, setVisible] = useState(4);
 
   useEffect(() => {
+    console.log(selectedBookDetails, "selectedbook");
     const updateVisible = () => {
       if (selectedBookDetails) {
         if (window.innerWidth >= 1478 && window.innerWidth < 1673) {
           setVisible(2);
-        } else if (window.innerWidth >= 1673 && window.innerWidth < 1638) {
+        } else if (window.innerWidth >= 1473 && window.innerWidth < 1638) {
           setVisible(3);
         } else if (window.innerWidth >= 1638) {
           setVisible(4);
